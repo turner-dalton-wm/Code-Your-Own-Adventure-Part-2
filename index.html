@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ChuBender, The Game</title>
+</head>
+<body onload = "start()" style="background:black;">
+<img src="http://freehdw.com/wallpapers/avatar-the-legend-of-korra-all-nations-symbol.jpg"/>
+<script>
+    var textbox = document.getElementById("textbox");
+    var story = alert('Water... Earth... Fire... Air. Long ago, the four nations lived together in harmony. Then everything changed when the Fire Nation attacked. After the attack many were taken from there homes');
+    alert("You are among those taken, a young bender from a land conquered from the fire nation. \n " +
+            "You, along with many other prisoners are huddled together in a Fire nation warship. \n " +
+            "Since you've been captured you've been separated from your family and friends after you were selected to fight in the gladiator matches in the Nation of flames. \n " +
+            "Finally after many days of travel you and the other prisoners arrive in the Fire Nation. \n " +
+            "Your eyes look out over the smoggy skyline, you gaze upon the many industrialized buildings before being pulled by the chains of the other prisoners you are connected too.\n " +
+            "A tall man in high ranking Fire Nation attire approaches your group. \n" +
+            " 'Attention pigs' he says in a thick accent that you don't recognise 'You few have been selected to fight on behalf of the Fire Nation people'. \n " +
+            "'Every week you will use your skills to fight the other prisoners stationed here will fight every week in a fight to the death... if you do not comply you will be executed'. \n" +
+            " He demonstrated by firing a singe bolt of lightning at the man in front of you killing him instantly, the smell of burning flesh hits your nose and your knees become week as you see the mans lifeless body fall to the floor in front of you.\n " +
+            "'Are you ready?'");
+
+
+    //FIGHT
+    var fireMoves = ["FIREBREATH", "LIGHTNINGBOLT", "SMOKESCREEN"];
+    var waterMoves = ["WATERWHIP", "BLOODBEND", "BARRIER"];
+    var earthMoves = ["ROCKBLAST", "STEELSPIRE", "ROCKWALL"];
+
+    var player = {
+        lives: 5,
+        choice: ""
+    };
+
+    var opponent = {
+        name: "",
+        lives: 5,
+        choice: ""
+    };
+
+    function fight(name, moves) {
+        opponent.name = name;
+        alert("YOU ARE IN A FIGHT WITH "+opponent.name+".");
+        return run(moves);
+    }
+
+    function run(moves) {
+        player.choice = prompt("WILL YOU "+moves[0]+", "+moves[1]+", OR "+moves[2]+"?").toUpperCase();
+        opponent.choice = moves[Math.floor(Math.random() * moves.length)];
+        switch(player.choice) {
+            case moves[0]:
+                if(opponent.choice === moves[2]) {
+                    alert(opponent.name+" HAS DODGED WITH "+moves[2]+"!");
+                }
+                else if(randomChance(85)) {
+                    opponent.lives -= 1;
+                    alert(opponent.name+" HAS BEEN HIT WITH "+moves[0]+"!");
+                } else {
+                    alert("YOUR "+moves[0]+"!");
+                }
+                if(opponent.choice === moves[0] && randomChance(80)) {
+                    player.lives -= 1;
+                    alert(opponent.name+" HAS USED "+moves[0]+"!");
+                }
+                else if(opponent.choice === moves[1] && randomChance(55)) {
+                    player.lives -= 2;
+                    alert(opponent.name+" HAS USED "+moves[1]+"!");
+                }
+                break;
+            case moves[1]:
+                if(opponent.choice === moves[2]) {
+                    alert(opponent.name+" HAS USED "+moves[2]+"!");
+                }
+                else if(randomChance(60)) {
+                    opponent.lives -= 2;
+                    alert(opponent.name+" HAS BEEN HIT WITH "+moves[1]+"!");
+                } else {
+                    alert("YOUR "+moves[1]+" MISSED!");
+                }
+                if(opponent.choice === moves[0] && randomChance(80)) {
+                    player.lives -= 1;
+                    alert(opponent.name+" HAS USED "+moves[0]+"!");
+                }
+                else if(opponent.choice === moves[1] && randomChance(55)) {
+                    player.lives -= 2;
+                    alert(opponent.name+" HAS USED "+moves[1]+"!");
+                }
+                break;
+            case moves[2]:
+                if(opponent.choice !== moves[2]) {
+                    alert(opponent.name+"'s "+opponent.choice+" missed!");
+                } else {
+                    alert("BOTH USED "+moves[2]+"!");
+                }
+                break;
+        }
+        if(player.lives > 0 && opponent.lives > 0) return run(moves);
+        else {
+            if(opponent.lives <= 0) {
+                alert(opponent.name+" HAS BEEN KNOCKED OUT!");
+                return true;
+            }
+            else {
+                alert("YOU HAVE BEEN KNOCKED OUT!");
+                return false;
+            }
+        }
+    }
+
+    function randomChance(percent) {
+        if(Math.random() * 100 > percent) return false;
+        return true;
+    }
+
+
+
+
+    function start() {
+        var userName = prompt("What is your name?").toUpperCase();
+        if (userName == "") {
+            start();
+        }
+        var nation = prompt("Chuse Your Nation! \nWater || Earth || Fire").toUpperCase();
+        if (nation == "") {
+            start();
+        }
+        else if (nation == "WATER") {
+            startWater();
+        }
+        else if (nation == "EARTH") {
+            startEarth();
+        }
+        else if (nation == "FIRE") {
+            startFire();
+        }
+        else {
+            alert("You are not worthy of the ChuBender if you only write gibberish. Try again.");
+            start();
+        }
+    }
+
+    function startFire() {
+        alert("You lived in the Fire Nation during this time, a part of their military, you followed the rest of your comrades. Corruption was rampant \n" +
+                "among the military, disgusted, you desert. Leaving for the city of Zhy you take refuge. Apparently word of your departure was \n" +
+                "among the military, disgusted, you desert. Leaving for the city of Zhy you take refuge. Apparently word of your departure was \n" +
+                "already widespread, and you are being hunted. Before you are able to escape, you are captured and sent to the Gladiator Arena in the fire nation capital.");
+        alert("You were apart of the Fire Nation's military, conquest and battle was all you knew. You had deserted after seeing the the corruption within the military. \n " +
+                "You leave camp and have been on the run ever since. You were recaptured in the city of Zhy and transported to the Fire Nation Capital to take part in their Gladiator fights.");
+        var names = ["Akhilesh", "Daruka", "Girilal", "Nidhi", "Chinatsu"];
+        for(var i=0; i<5; i++) {
+            if(!fight(names[i], fireMoves)) {
+                alert("YOU HAVE LOST");
+                location.reload();
+            }
+        }
+    }
+
+    function startWater() {
+        alert("You lived a very peaceful live before this.  Living in the Northern Tribe land was very peaceful, as it should be.  You had a life as normal as it could be there.\n" +
+                "Supporting the economy based off fishing and sea life exports gave much profit.  Considering you were alone and single, the revenue was nice. \n"+
+                "Although, your job was a bit harder than the others.  You went deep sea fishing for things not commonly found around the tribe. \n" +
+                "Being a water bender made it easy though, as you could just search the water through your moves to see where the fish were," +
+                " and it the weather got rough you could just make it calm in the area around you. \n" +
+                "This came with dangers though.  Every once and a while ships would come by you, not displaying their nation. All working would have to basically stop. \n" +
+                "If they were the fire nation they would most definitely attack you, maybe even kill you.  Which is the main reason why your job is harder.");
+        alert("One day while you were out doing your job, doing the same thing you always do, a rouge wave came up and caught you by surprise. \n" +
+                " It took most of your strength and all of your concentration to hold it off just long enough for your boat to drift away from the wave. \n" +
+                "After wallowing in your own self achievement for a minute, a tranquil, idle sound of a ship found its way to your ears. \n" +
+                "You quickly snap out of the self induced trance and realize the trouble you could be in.\n" +
+                "Your eyes dart around and quickly find the figure of a fire nation ship.  What could it be doing this close to the water land?");
+        alert("You try to stay as still as possible, begging that it won't see you." +
+                "  The pleading does not help though, as it pulls up beside you.  To your knowledge there is no one on the deck." +
+                "It is all in silence when you feel a ripple in the water.  You snap around to see what it is.  There's a tip in the boat, the soldiers snatch you.");
+        var names = ["Akhilesh", "Daruka", "Girilal", "Nidhi", "Chinatsu"];
+        for(var i=0; i<5; i++) {
+            if(!fight(names[i], waterMoves)) {
+                alert("YOU HAVE LOST");
+                location.reload();
+            }
+        }
+    }
+
+    function startEarth() {
+        alert("After witnessing the execution, you and the other prisoners are taken to the holding cells." +
+                "  You are each given a sheet and a one pair of clothes, colored according to your bending type," +
+                " and are put into your completely metal enclosure. You lay on cold steel bed, in complete darkness" +
+                " and try to drift away to slumber. Eventually you nod off and you relive the past. It's your 10th" +
+                " birthday, your in your hometown of Omashu. You have just been notified that your father has been" +
+                " captured and killed during the war. You remember the overwhelming feeling of loneliness, despair " +
+                "and anger you felt as you realized your father, the person who you looked up to most in your life, " +
+                "who was always there for you when you needed him, had been taken away from the world in an instant. " +
+                "Fast forward 8 years. You stand in a row with only 9 other people, as General Fong, hands you your " +
+                "military uniform. You feel a sense of pride, as you follow in your father's footsteps to become one of" +
+                " the top ranked soldiers in your class. Go forward 2 more years, during the surrender of Omashu. As you" +
+                " see your family carted off in prison carts most likely to be sold as slaves. You turn to your left and " +
+                "see as most of the other soldiers are executed. You and you alone are taken prisoner out of the other " +
+                "10,000 warriors stationed there. You feel guilt that you were the one to live, that you could not save " +
+                "your family. For the first time in your life you feel truly scared, because you do not want to die like " +
+                "your father, to leave your family behind. Suddenly you wake with a start, a cold sweat had accumulated " +
+                "all over your body. Your cellmate, an elderly non-bender glances over at you ‘Don't worry kid, everyone " +
+                "has a tough first night’ he says as he looks down at his steel bed. ‘You better be ready kid, newbies " +
+                "fight first.’ He says as a firebender soldier comes to the metal gate ‘Step outside pig’ he says while " +
+                "holding a plate of gruel. The old man gives you a saddened smile before patting you on the back ‘Good " +
+                "luck kid... You're gonna need it’. The soldier leads you through the prison to the fighting area gates." +
+                " ‘Through these doors you will fight another prisoner to the death. The rules are simple. Rule 1 kill or" +
+                " be killed. Here's your breakfast swine’ he says before dropping your food onto the ground and walking out." +
+                " You wait for what seems like hours before, the gates finally open. Walk through the gates?");
+        var names = ["Akhilesh", "Daruka", "Girilal", "Nidhi", "Chinatsu"];
+        for(var i=0; i<5; i++) {
+            if(!fight(names[i], earthMoves)) {
+                alert("YOU HAVE LOST");
+                location.reload();
+            }
+        }
+
+    }
+</script>
+</body>
+</html>
